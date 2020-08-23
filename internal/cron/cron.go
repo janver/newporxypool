@@ -6,6 +6,6 @@ import (
 )
 
 func Cron() {
-	_ = gocron.Every(15).Minutes().Do(app.CrawlGo)
+	_ = gocron.Every(10).Minutes().Do(app.CrawlGo)
 	<-gocron.Start()
 }
