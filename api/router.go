@@ -97,7 +97,7 @@ func Run() {
 	setupRouter()
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8080"
+		port = "80"
 	}
 	router.Run(":" + port)
 }
