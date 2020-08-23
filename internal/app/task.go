@@ -71,8 +71,11 @@ func FetchNewConfigFileThenInit() {
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 
+	fmt.Println(string(body))
+
 	err = yaml.Unmarshal(body, &config.SourceConfig)
 	if err != nil {
+		fmt.Errorf("Config file Error: %s\n", err.Error())
 		return
 	}
 	if domain := os.Getenv("DOMAIN"); domain != "" {

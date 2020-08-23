@@ -1,30 +1,26 @@
 package api
 
 import (
-	"fmt"
 	"net/http"
 	"os"
 
+	"github.com/zu1k/proxypool/config"
+
 	"github.com/gin-gonic/gin"
 	_ "github.com/heroku/x/hmetrics/onload"
-	"github.com/zu1k/proxypool/config"
 	"github.com/zu1k/proxypool/internal/cache"
 	"github.com/zu1k/proxypool/pkg/provider"
 )
 
 var router *gin.Engine
-var domain = "proxy.tgbot.co"
 
 func setupRouter() {
-	domain = config.SourceConfig.Domain
-	fmt.Println("Domain:", domain)
-
 	router = gin.Default()
 	router.LoadHTMLGlob("assets/html/*")
 
 	router.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", gin.H{
-			"domain":               domain,
+			"domain":               config.SourceConfig.Domain,
 			"all_proxies_count":    cache.AllProxiesCount,
 			"ss_proxies_count":     cache.SSProxiesCount,
 			"ssr_proxies_count":    cache.SSRProxiesCount,
@@ -37,32 +33,33 @@ func setupRouter() {
 
 	router.GET("/clash", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "clash.html", gin.H{
-			"domain": domain,
+			"domain": config.SourceConfig.Domain,
 		})
 	})
 
 	router.GET("/surge", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "surge.html", gin.H{
-			"domain": domain,
+			"domain": config.SourceConfig.Domain,
 		})
 	})
 
 	router.GET("/clash/config", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "clash-config.yaml", gin.H{
-			"domain": domain,
+			"domain": config.SourceConfig.Domain,
 		})
 	})
 
 	router.GET("/surge/config", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "surge.conf", gin.H{
-			"domain": domain,
+			"domain": config.SourceConfig.Domain,
 		})
 	})
 
 	router.GET("/clash/proxies", func(c *gin.Context) {
 		proxyTypes := c.DefaultQuery("type", "")
+		proxyCountry := c.DefaultQuery("c", "")
 		text := ""
-		if proxyTypes == "" {
+		if proxyTypes == "" && proxyCountry == "" {
 			text = cache.GetString("clashproxies")
 			if text == "" {
 				proxies := cache.GetProxies("proxies")
@@ -72,11 +69,11 @@ func setupRouter() {
 			}
 		} else if proxyTypes == "all" {
 			proxies := cache.GetProxies("allproxies")
-			clash := provider.Clash{Proxies: proxies, Types: proxyTypes}
+			clash := provider.Clash{Proxies: proxies, Types: proxyTypes, Country: proxyCountry}
 			text = clash.Provide()
 		} else {
 			proxies := cache.GetProxies("proxies")
-			clash := provider.Clash{Proxies: proxies, Types: proxyTypes}
+			clash := provider.Clash{Proxies: proxies, Types: proxyTypes, Country: proxyCountry}
 			text = clash.Provide()
 		}
 		c.String(200, text)
