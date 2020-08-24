@@ -4,6 +4,8 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/ghodss/yaml"
+
 	"github.com/zu1k/proxypool/config"
 	"github.com/zu1k/proxypool/pkg/getter"
 )
@@ -11,24 +13,38 @@ import (
 var Getters = make([]getter.Getter, 0)
 
 func InitConfigAndGetters(path string) (err error) {
-	c, err := config.Parse(path)
+	err = config.Parse(path)
 	if err != nil {
-		return err
+		return
 	}
-	if c == nil {
+	if s := config.Config.SourceFiles; len(s) == 0 {
 		return errors.New("no sources")
+	} else {
+		initGetters(s)
 	}
-	InitGetters(c.Sources)
-	return nil
+	return
 }
 
-func InitGetters(sources []config.Source) {
+func initGetters(sourceFiles []string) {
 	Getters = make([]getter.Getter, 0)
-	for _, source := range sources {
-		g, err := getter.NewGetter(source.Type, source.Options)
-		if err == nil && g != nil {
-			Getters = append(Getters, g)
-			fmt.Println("init getter:", source.Type, source.Options)
+	for _, path := range sourceFiles {
+		data, err := config.ReadFile(path)
+		if err != nil {
+			fmt.Errorf("Init SourceFile Error: %s\n", err.Error())
+			continue
+		}
+		sourceList := make([]config.Source, 0)
+		err = yaml.Unmarshal(data, &sourceList)
+		if err != nil {
+			fmt.Errorf("Init SourceFile Error: %s\n", err.Error())
+			continue
+		}
+		for _, source := range sourceList {
+			g, err := getter.NewGetter(source.Type, source.Options)
+			if err == nil && g != nil {
+				Getters = append(Getters, g)
+				fmt.Println("init getter:", source.Type, source.Options)
+			}
 		}
 	}
 	fmt.Println("Getter count:", len(Getters))
