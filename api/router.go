@@ -1,28 +1,36 @@
 package api
 
 import (
+	"html/template"
 	"net/http"
 	"os"
 
-	"github.com/zu1k/proxypool/config"
-
 	"github.com/gin-gonic/gin"
 	_ "github.com/heroku/x/hmetrics/onload"
+	"github.com/zu1k/proxypool/config"
+	binhtml "github.com/zu1k/proxypool/internal/bindata/html"
 	"github.com/zu1k/proxypool/internal/cache"
 	"github.com/zu1k/proxypool/pkg/provider"
 )
 
-const version = "v0.3.0"
+const version = "v0.3.3"
 
 var router *gin.Engine
 
 func setupRouter() {
-	router = gin.Default()
-	router.LoadHTMLGlob("assets/html/*")
+	gin.SetMode(gin.ReleaseMode)
+	router = gin.New()
+	router.Use(gin.Logger(), gin.Recovery())
+	temp, err := loadTemplate()
+	if err != nil {
+		panic(err)
+	}
+	router.SetHTMLTemplate(temp)
 
 	router.GET("/", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index.html", gin.H{
+		c.HTML(http.StatusOK, "assets/html/index.html", gin.H{
 			"domain":               config.Config.Domain,
+			"getters_count":        cache.GettersCount,
 			"all_proxies_count":    cache.AllProxiesCount,
 			"ss_proxies_count":     cache.SSProxiesCount,
 			"ssr_proxies_count":    cache.SSRProxiesCount,
@@ -35,25 +43,25 @@ func setupRouter() {
 	})
 
 	router.GET("/clash", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "clash.html", gin.H{
+		c.HTML(http.StatusOK, "assets/html/clash.html", gin.H{
 			"domain": config.Config.Domain,
 		})
 	})
 
 	router.GET("/surge", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "surge.html", gin.H{
+		c.HTML(http.StatusOK, "assets/html/surge.html", gin.H{
 			"domain": config.Config.Domain,
 		})
 	})
 
 	router.GET("/clash/config", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "clash-config.yaml", gin.H{
+		c.HTML(http.StatusOK, "assets/html/clash-config.yaml", gin.H{
 			"domain": config.Config.Domain,
 		})
 	})
 
 	router.GET("/surge/config", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "surge.conf", gin.H{
+		c.HTML(http.StatusOK, "assets/html/surge.conf", gin.H{
 			"domain": config.Config.Domain,
 		})
 	})
@@ -100,4 +108,16 @@ func Run() {
 		port = "80"
 	}
 	router.Run(":" + port)
+}
+
+func loadTemplate() (t *template.Template, err error) {
+	t = template.New("")
+	for _, fileName := range binhtml.AssetNames() {
+		data := binhtml.MustAsset(fileName)
+		t, err = t.New(fileName).Parse(string(data))
+		if err != nil {
+			return nil, err
+		}
+	}
+	return t, nil
 }

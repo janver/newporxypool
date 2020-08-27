@@ -3,6 +3,8 @@ package proxy
 import (
 	"fmt"
 	"sort"
+	"strings"
+	"sync"
 )
 
 type ProxyList []Proxy
@@ -63,20 +65,46 @@ func (ps ProxyList) Sort() ProxyList {
 
 func (ps ProxyList) NameAddCounrty() ProxyList {
 	num := len(ps)
+	wg := &sync.WaitGroup{}
+	wg.Add(num)
 	for i := 0; i < num; i++ {
-		country, err := geoIp.Find(ps[i].BaseInfo().Server)
-		if err != nil || country == "" {
-			country = "Earth"
-		}
-		ps[i].SetName(fmt.Sprintf("%s", country))
+		ii := i
+		go func() {
+			defer wg.Done()
+			_, country, err := geoIp.Find(ps[ii].BaseInfo().Server)
+			if err != nil {
+				country = "🏁 ZZ"
+			}
+			ps[ii].SetName(fmt.Sprintf("%s", country))
+			//ps[ii].SetIP(ip)
+		}()
 	}
+	wg.Wait()
 	return ps
 }
 
 func (ps ProxyList) NameAddIndex() ProxyList {
 	num := len(ps)
 	for i := 0; i < num; i++ {
-		ps[i].SetName(fmt.Sprintf("%s_%d", ps[i].BaseInfo().Name, i+1))
+		ps[i].SetName(fmt.Sprintf("%s_%+02v", ps[i].BaseInfo().Name, i+1))
+	}
+	return ps
+}
+
+func (ps ProxyList) NameReIndex() ProxyList {
+	num := len(ps)
+	for i := 0; i < num; i++ {
+		originName := ps[i].BaseInfo().Name
+		country := strings.SplitN(originName, "_", 2)[0]
+		ps[i].SetName(fmt.Sprintf("%s_%+02v", country, i+1))
+	}
+	return ps
+}
+
+func (ps ProxyList) NameAddTG() ProxyList {
+	num := len(ps)
+	for i := 0; i < num; i++ {
+		ps[i].SetName(fmt.Sprintf("%s %s", ps[i].BaseInfo().Name, "@peekfun"))
 	}
 	return ps
 }
