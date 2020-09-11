@@ -8,6 +8,9 @@
 - type: webfuzzsub
   options:
     url: https://t.me/s/ssrv2taytgshare?before=743
+- type: webfuzzsub
+  options:
+    url: http://d.zaix.ru/ntiL.txt
 
 # 订阅链接
 - type: subscribe
@@ -22,11 +25,26 @@
 - type: subscribe
   options:
     url: https://proxy.tgbot.co/vmess/sub
+- type: subscribe
+  options:
+    url: https://bihai-v2ray.netlify.com
 
 # 网页模糊抓取
 - type: webfuzz
   options:
     url: https://merlinblog.xyz/wiki/freess.html
+- type: webfuzz
+  options:
+    url: https://github.com/iwxf/free-v2ray/blob/master/README.md
+- type: webfuzz
+  options:
+    url: https://github.com/hugetiny/awesome-vpn/blob/master/READMECN.md
+- type: webfuzz
+  options:
+    url: https://github.com/umelabs/node.umelabs.dev
+- type: webfuzz
+  options:
+    url: https://github.com/ruanfei/ShadowsocksRRShare/blob/master/vmess%E8%8A%82%E7%82%B9%EF%BC%88%E9%A1%B6%E9%83%A8%E6%9C%80%E6%96%B0).md
 - type: webfuzz
   options:
     url: https://bihai-v2ray.netlify.com
@@ -87,6 +105,10 @@
     num: 200
 - type: tgchannel
   options:
+    channel: moneyfly01
+    num: 200
+- type: tgchannel
+  options:
     channel: FreeSSRNode
     num: 200
 - type: tgchannel
@@ -96,10 +118,6 @@
 - type: tgchannel
   options:
     channel: ssrtool
-    num: 200
-- type: tgchannel
-  options:
-    channel: mianfeifenxiang
     num: 200
 - type: tgchannel
   options:
@@ -115,23 +133,7 @@
     num: 200
 - type: tgchannel
   options:
-    channel: FreeSSR666
-    num: 200
-- type: tgchannel
-  options:
-    channel: vmessr
-    num: 200
-- type: tgchannel
-  options:
     channel: ssrtool_crack
-    num: 200
-- type: tgchannel
-  options:
-    channel: Shadowsocks_R
-    num: 200
-- type: tgchannel
-  options:
-    channel: dangzhibu
     num: 200
 - type: tgchannel
   options:
@@ -143,27 +145,11 @@
     num: 200
 - type: tgchannel
   options:
-    channel: ioshkj007
-    num: 200
-- type: tgchannel
-  options:
     channel: fanqiang666
     num: 200
 - type: tgchannel
   options:
-    channel: FreeSSR666
-    num: 200
-- type: tgchannel
-  options:
-    channel: vmessr
-    num: 200
-- type: tgchannel
-  options:
     channel: ssrtool_crack
-    num: 200
-- type: tgchannel
-  options:
-    channel: Shadowsocks_R
     num: 200
 - type: tgchannel
   options:
@@ -183,35 +169,11 @@
     num: 200
 - type: tgchannel
   options:
-    channel: vpnchina
-    num: 200
-- type: tgchannel
-  options:
-    channel: XRAcc
-    num: 200
-- type: tgchannel
-  options:
-    channel: TelMTProto
-    num: 200
-- type: tgchannel
-  options:
-    channel: apkdl_bot
-    num: 200
-- type: tgchannel
-  options:
     channel: TgProxies
     num: 200
 - type: tgchannel
   options:
-    channel: zonghe_info
-    num: 200
-- type: tgchannel
-  options:
     channel: youmtp
-    num: 200
-- type: tgchannel
-  options:
-    channel: yo520
     num: 200
 
 # 翻墙党论坛抓取
