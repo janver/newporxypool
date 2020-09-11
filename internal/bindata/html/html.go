@@ -225,10 +225,10 @@ func AssetNames() []string {
 // _bindata is a table, holding each asset generator, mapped to its name.
 var _bindata = map[string]func() (*asset, error){
 	"assets/html/clash-config.yaml": assetsHtmlClashConfigYaml,
-	"assets/html/clash.html": assetsHtmlClashHtml,
-	"assets/html/index.html": assetsHtmlIndexHtml,
-	"assets/html/surge.conf": assetsHtmlSurgeConf,
-	"assets/html/surge.html": assetsHtmlSurgeHtml,
+	"assets/html/clash.html":        assetsHtmlClashHtml,
+	"assets/html/index.html":        assetsHtmlIndexHtml,
+	"assets/html/surge.conf":        assetsHtmlSurgeConf,
+	"assets/html/surge.html":        assetsHtmlSurgeHtml,
 }
 
 // AssetDir returns the file names below a certain
@@ -270,14 +270,15 @@ type bintree struct {
 	Func     func() (*asset, error)
 	Children map[string]*bintree
 }
+
 var _bintree = &bintree{nil, map[string]*bintree{
 	"assets": &bintree{nil, map[string]*bintree{
 		"html": &bintree{nil, map[string]*bintree{
 			"clash-config.yaml": &bintree{assetsHtmlClashConfigYaml, map[string]*bintree{}},
-			"clash.html": &bintree{assetsHtmlClashHtml, map[string]*bintree{}},
-			"index.html": &bintree{assetsHtmlIndexHtml, map[string]*bintree{}},
-			"surge.conf": &bintree{assetsHtmlSurgeConf, map[string]*bintree{}},
-			"surge.html": &bintree{assetsHtmlSurgeHtml, map[string]*bintree{}},
+			"clash.html":        &bintree{assetsHtmlClashHtml, map[string]*bintree{}},
+			"index.html":        &bintree{assetsHtmlIndexHtml, map[string]*bintree{}},
+			"surge.conf":        &bintree{assetsHtmlSurgeConf, map[string]*bintree{}},
+			"surge.html":        &bintree{assetsHtmlSurgeHtml, map[string]*bintree{}},
 		}},
 	}},
 }}
@@ -328,4 +329,3 @@ func _filePath(dir, name string) string {
 	cannonicalName := strings.Replace(name, "\\", "/", -1)
 	return filepath.Join(append([]string{dir}, strings.Split(cannonicalName, "/")...)...)
 }
-

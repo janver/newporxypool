@@ -10,7 +10,6 @@ import (
 	"github.com/zu1k/proxypool/api"
 	"github.com/zu1k/proxypool/internal/app"
 	"github.com/zu1k/proxypool/internal/cron"
-	"github.com/zu1k/proxypool/internal/database"
 	"github.com/zu1k/proxypool/pkg/proxy"
 )
 
@@ -35,7 +34,7 @@ func main() {
 		panic(err)
 	}
 
-	database.InitTables()
+	//database.InitTables()
 	proxy.InitGeoIpDB()
 	fmt.Println("Do the first crawl...")
 	go app.CrawlGo()
