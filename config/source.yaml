@@ -18,9 +18,6 @@
     url: https://raw.githubusercontent.com/ssrsub/ssr/master/v2ray
 - type: subscribe
   options:
-    url: http://129.211.76.192/ssr/0904ssr.txt
-- type: subscribe
-  options:
     url: https://proxy.tgbot.co/ss/sub
 - type: subscribe
   options:
@@ -102,10 +99,6 @@
 - type: tgchannel
   options:
     channel: SSRSUB
-    num: 200
-- type: tgchannel
-  options:
-    channel: moneyfly01
     num: 200
 - type: tgchannel
   options:
