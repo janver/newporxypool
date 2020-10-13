@@ -23,6 +23,9 @@
 - type: webfuzzsub
   options:
     url: https://github.com/woytu/notes-vuepress/blob/757206d5c10d112d56a3c789d5a622d4bcfe6375/System/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F.md
+- type: webfuzzsub
+  options:
+    url: http://proxypool.turinglabs.net/
 
 # 订阅链接
 - type: subscribe
@@ -40,6 +43,60 @@
 - type: subscribe
   options:
     url: https://raw.githubusercontent.com/umelabs/node.umelabs.dev/master/Subscribe/v2ray.md
+- type: subscribe
+  options:
+    url: https://pp.xbin.xyz/sip002/sub
+- type: subscribe
+  options:
+    url: https://pp.xbin.xyz/ssr/sub
+- type: subscribe
+  options:
+    url: https://pp.xbin.xyz/vmess/sub
+- type: subscribe
+  options:
+    url: https://by.wxf2088.xyz/sip002/sub
+- type: subscribe
+  options:
+    url: https://by.wxf2088.xyz/ssr/sub
+- type: subscribe
+  options:
+    url: https://by.wxf2088.xyz/vmess/sub
+- type: subscribe
+  options:
+    url: https://free.gooii.ml/sip002/sub
+- type: subscribe
+  options:
+    url: https://free.gooii.ml/ssr/sub
+- type: subscribe
+  options:
+    url: https://free.gooii.ml/vmess/sub
+- type: subscribe
+  options:
+    url: http://pnb52.herokuapp.com/sip002/sub
+- type: subscribe
+  options:
+    url: http://pnb52.herokuapp.com/ssr/sub
+- type: subscribe
+  options:
+    url: http://pnb52.herokuapp.com/vmess/sub
+- type: subscribe
+  options:
+    url: http://dafeige.herokuapp.com/sip002/sub
+- type: subscribe
+  options:
+    url: http://dafeige.herokuapp.com/ssr/sub
+- type: subscribe
+  options:
+    url: http://dafeige.herokuapp.com/vmess/sub
+- type: subscribe
+  options:
+    url: https://pp.xbin.xyz/sip002/sub
+- type: subscribe
+  options:
+    url: https://pp.xbin.xyz/ssr/sub
+- type: subscribe
+  options:
+    url: https://pp.xbin.xyz/vmess/sub
 
 # 网页模糊抓取
 - type: webfuzz
@@ -47,7 +104,16 @@
     url: https://merlinblog.xyz/wiki/freess.html
 - type: webfuzz
   options:
+    url: https://github.com/freefq/free
+- type: webfuzz
+  options:
+    url: https://telemetr.io/uk/channels/1379100867-SuperFastProxy#post-1709
+- type: webfuzz
+  options:
     url: https://telete.in/s/Accbox_pro?after=1
+- type: webfuzz
+  options:
+    url: https://raw.githubusercontent.com/du5/free/master/file/0906/surge.conf
 - type: webfuzz
   options:
     url: https://github.com/umelabs/node.umelabs.dev
@@ -131,6 +197,10 @@
 - type: tgchannel
   options:
     channel: V2List
+    num: 200
+- type: tgchannel
+  options:
+    channel: SuperFastProxy
     num: 200
 - type: tgchannel
   options:
